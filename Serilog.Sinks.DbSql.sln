@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Sinks.DbSql", "src\Serilog.Sinks.DbSql\Serilog.Sinks.DbSql.csproj", "{5325D647-4AD8-4162-A9F6-85139B4326D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{E632B518-644B-47F0-A348-70DBEFCF5FDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSinkDbSql", "src\TestSimple\TestSinkDbSql\TestSinkDbSql.csproj", "{5C4A6345-A286-4EB5-9149-6E9889158104}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5325D647-4AD8-4162-A9F6-85139B4326D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5325D647-4AD8-4162-A9F6-85139B4326D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5325D647-4AD8-4162-A9F6-85139B4326D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5325D647-4AD8-4162-A9F6-85139B4326D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C4A6345-A286-4EB5-9149-6E9889158104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C4A6345-A286-4EB5-9149-6E9889158104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C4A6345-A286-4EB5-9149-6E9889158104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C4A6345-A286-4EB5-9149-6E9889158104}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5C4A6345-A286-4EB5-9149-6E9889158104} = {E632B518-644B-47F0-A348-70DBEFCF5FDB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {254366D0-F347-4747-9FA8-A33184B8F9E3}
+	EndGlobalSection
+EndGlobal
