@@ -1,6 +1,4 @@
-﻿using Serilog.Sinks.DbSql;
-
-namespace Serilog.Sinks.DbSql.Dependencies
+﻿namespace Serilog.Sinks.DbSql.Dependencies
 {
     internal class SinkDependencies
     {

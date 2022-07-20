@@ -1,7 +1,7 @@
-﻿using System;
-using Serilog.Formatting;
+﻿using Serilog.Formatting;
 using Serilog.Sinks.DbSql.SqlSink;
 using Serilog.Sinks.PeriodicBatching;
+using System;
 
 namespace Serilog.Sinks.DbSql.Configuration.Factories
 {

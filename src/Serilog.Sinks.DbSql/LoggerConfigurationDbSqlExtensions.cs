@@ -15,7 +15,7 @@ namespace Serilog.Sinks.DbSql
     public static class LoggerConfigurationDbSqlExtensions
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="loggerConfiguration"></param>
         /// <param name="factory"></param>
@@ -45,7 +45,7 @@ namespace Serilog.Sinks.DbSql
             _providerFactory.RegisterFactory(providerName, factory);
 
             IDbSqlSinkFactory sinkFactory = new DbSqlSinkFactory();
-            var sink = sinkFactory.Create(providerName,connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create(providerName, connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             IPeriodicBatchingSinkFactory periodicBatchingSinkFactory = new PeriodicBatchingSinkFactory();
             var periodicBatchingSink = periodicBatchingSinkFactory.Create(sink, sinkOptions);
@@ -65,7 +65,7 @@ namespace Serilog.Sinks.DbSql
             ITextFormatter logEventFormatter = null) =>
             loggerConfiguration.DbSqlInternal(
                 configSectionName: configSectionName,
-                factory:factory,
+                factory: factory,
                 connectionString: connectionString,
                 sinkOptions: sinkOptions,
                 restrictedToMinimumLevel: restrictedToMinimumLevel,
@@ -98,8 +98,7 @@ namespace Serilog.Sinks.DbSql
             string providerName = _providerFactory.GetProviderInvariantName(sinkOptions.SqlDatabaseType);
             _providerFactory.RegisterFactory(providerName, factory);
 
-
-            var sink = sinkFactory.Create(providerName,connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create(providerName, connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             var periodicBatchingSink = batchingSinkFactory.Create(sink, sinkOptions);
 

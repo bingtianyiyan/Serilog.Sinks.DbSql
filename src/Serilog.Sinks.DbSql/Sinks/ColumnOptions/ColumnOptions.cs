@@ -86,10 +86,6 @@ namespace Serilog.Sinks.DbSql
         /// </summary>
         public bool ClusteredColumnstoreIndex { get; set; } = false;
 
-        /// <summary>
-        /// Indicates if triggers should be disabled when inserting log entries.
-        /// </summary>
-        public bool DisableTriggers { get; set; }
 
         /// <summary>
         /// Additional log event property columns.

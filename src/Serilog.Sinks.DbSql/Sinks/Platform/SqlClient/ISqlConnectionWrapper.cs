@@ -5,7 +5,6 @@ namespace Serilog.Sinks.DbSql.SqlClient
 {
     internal interface ISqlConnectionWrapper : IDisposable
     {
-
         void Open();
 
         ISqlCommandWrapper CreateCommand(IDbTransaction trans);

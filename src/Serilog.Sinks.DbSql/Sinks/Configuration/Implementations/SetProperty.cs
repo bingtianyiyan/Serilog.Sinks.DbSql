@@ -29,7 +29,7 @@ namespace Serilog.Sinks.DbSql
                 var setting = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
                 setter(setting);
             }
-            // don't change the property if the conversion fails 
+            // don't change the property if the conversion fails
             catch (InvalidCastException) { }
             catch (OverflowException) { }
         }

@@ -7,6 +7,7 @@ namespace Serilog.Sinks.DbSql
     {
         private readonly string _connectionString;
         private readonly string _providerName;
+
         public SqlConnectionFactory(
             string providerName,
             string connectionString)
@@ -25,7 +26,7 @@ namespace Serilog.Sinks.DbSql
 
         public ISqlConnectionWrapper Create()
         {
-            return new SqlConnectionWrapper(_providerName,_connectionString);
+            return new SqlConnectionWrapper(_providerName, _connectionString);
         }
     }
 }

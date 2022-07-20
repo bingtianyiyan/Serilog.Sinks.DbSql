@@ -13,20 +13,17 @@ namespace Serilog.Sinks.DbSql
     {
         private readonly string _tableName;
         private readonly string _schemaName;
-        private readonly bool _disableTriggers;
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
         private readonly ILogEventDataGenerator _logEventDataGenerator;
 
         public SqlBulkBatchWriter(
             string tableName,
             string schemaName,
-            bool disableTriggers,
             ISqlConnectionFactory sqlConnectionFactory,
             ILogEventDataGenerator logEventDataGenerator)
         {
             _tableName = tableName ?? throw new ArgumentNullException(nameof(tableName));
             _schemaName = !String.IsNullOrEmpty(schemaName) ? $"{schemaName}." : "";
-            _disableTriggers = disableTriggers;
             _sqlConnectionFactory = sqlConnectionFactory ?? throw new ArgumentNullException(nameof(sqlConnectionFactory));
             _logEventDataGenerator = logEventDataGenerator ?? throw new ArgumentNullException(nameof(logEventDataGenerator));
         }
@@ -41,17 +38,17 @@ namespace Serilog.Sinks.DbSql
                 {
                     var columns = dataTable.Columns.Cast<DataColumn>()
                                                    .Where(x => x.ColumnName != nameof(StandardColumn.Id))
-                                                   .Select(m => m.ColumnName);
+                                                   .Select(m => m.ColumnName.ToLowerInvariant());
                     try
                     {
                         using (var insertCommand = connection.CreateCommand(connection.BeginTran()))
                         {
-                            insertCommand.CommandText = $"INSERT INTO {_schemaName}{_tableName}({string.Join(",", columns)}) VALUES(?{string.Join(",?", columns)})";
+                            insertCommand.CommandText = $"insert into {_schemaName.ToLowerInvariant()}{_tableName.ToLowerInvariant()}({string.Join(",", columns)}) values(?{string.Join(",?", columns)})";
                             for (int i = 0; i < dataTable.Columns.Count; i++)
                             {
                                 if (dataTable.Columns[i].ColumnName != nameof(StandardColumn.Id))
                                 {
-                                    insertCommand.AddParameterName("?" + dataTable.Columns[i].ColumnName);
+                                    insertCommand.AddParameterName("?" + dataTable.Columns[i].ColumnName.ToLowerInvariant());
                                 }
                             }
                             var commandP = insertCommand.GetParameters();
@@ -61,7 +58,7 @@ namespace Serilog.Sinks.DbSql
                                 var index = 0;
                                 foreach (var field in _logEventDataGenerator.GetColumnsAndValues(logEvent))
                                 {
-                                    commandP[index].Value = field.Value;
+                                    commandP[index].Value = field.Value ?? DBNull.Value;
                                     index++;
                                 }
                                 insertCommand.ExecuteNonQuery();

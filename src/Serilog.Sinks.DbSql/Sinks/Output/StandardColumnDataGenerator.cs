@@ -70,7 +70,7 @@ namespace Serilog.Sinks.DbSql.Output
             }
         }
 
-        //TODO 
+        //TODO
         private static string TruncateOutput(string value, int dataLength) =>
             dataLength < 0
                 ? value     // No need to truncate if length set to maximum

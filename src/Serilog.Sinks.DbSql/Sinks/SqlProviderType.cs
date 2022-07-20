@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Serilog.Sinks.DbSql
+﻿namespace Serilog.Sinks.DbSql
 {
     /// <summary>
     /// Database Provider
@@ -9,16 +7,14 @@ namespace Serilog.Sinks.DbSql
     {
         SqlServer,
         MySql,
-        SQLite,
-        Oracle,
-        ODBC,
-        OleDb,
-        Firebird,
-        PostgreSql,
-        DB2,
-        Informix,
-        SqlServerCe
+        //SQLite,
+        //Oracle,
+        //ODBC,
+        //OleDb,
+        //Firebird,
+        //PostgreSql,
+        //DB2,
+        //Informix,
+        //SqlServerCe
     }
-   
-
 }

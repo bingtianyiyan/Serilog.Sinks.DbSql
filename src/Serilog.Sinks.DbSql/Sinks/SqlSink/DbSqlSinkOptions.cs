@@ -5,9 +5,8 @@ namespace Serilog.Sinks.DbSql.SqlSink
     /// <summary>
     /// provider Common DbSql Configuration Options
     /// </summary>
-   public  class DbSqlSinkOptions
+    public class DbSqlSinkOptions
     {
-
         public DbSqlSinkOptions()
         {
             BatchPostingLimit = 50;
@@ -66,9 +65,8 @@ namespace Serilog.Sinks.DbSql.SqlSink
         /// </summary>
         public bool EagerlyEmitFirstEvent { get; set; }
 
-
         /// <summary>
-        /// Db Type 
+        /// Db Type
         /// </summary>
         public SqlProviderType SqlDatabaseType { get; set; }
     }

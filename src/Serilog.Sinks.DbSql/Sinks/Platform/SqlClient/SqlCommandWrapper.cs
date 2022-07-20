@@ -31,7 +31,7 @@ namespace Serilog.Sinks.DbSql.SqlClient
             var parameter = (DbParameter)_sqlCommand.CreateParameter();//(parameterName, value ?? DBNull.Value)
             parameter.ParameterName = parameterName;
             parameter.Value = value;
-            
+
             _sqlCommand.Parameters.Add(parameter);
         }
 
@@ -44,15 +44,13 @@ namespace Serilog.Sinks.DbSql.SqlClient
 
         public DbParameterCollection GetParameters()
         {
-          
-           return (DbParameterCollection)_sqlCommand.Parameters;
+            return (DbParameterCollection)_sqlCommand.Parameters;
         }
 
         public DbTransaction GetTransaction()
         {
             return (DbTransaction)_sqlCommand.Transaction;
         }
-
 
         public int ExecuteNonQuery() =>
             _sqlCommand.ExecuteNonQuery();

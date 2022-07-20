@@ -39,7 +39,6 @@ namespace Serilog.Sinks.DbSql.Extensions
             return expObject;
         }
 
-
         private static object Simplify(LogEventPropertyValue data)
         {
             if (data is ScalarValue value)

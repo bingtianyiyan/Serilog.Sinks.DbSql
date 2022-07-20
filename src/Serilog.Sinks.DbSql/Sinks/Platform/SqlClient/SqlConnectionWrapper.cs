@@ -10,7 +10,7 @@ namespace Serilog.Sinks.DbSql.SqlClient
         private bool _disposedValue;
         private readonly object _o_lock = new object();
 
-        public SqlConnectionWrapper(string providerName,string connectionString)
+        public SqlConnectionWrapper(string providerName, string connectionString)
         {
             if (_sqlConnection == null)
             {
@@ -21,13 +21,10 @@ namespace Serilog.Sinks.DbSql.SqlClient
                         var factory = DbProviderFactories.GetFactory(providerName);
                         _sqlConnection = factory.CreateConnection();
                         _sqlConnection.ConnectionString = connectionString;
-                        Console.WriteLine("sqlConnection create success");
                     }
                 }
             }
         }
-
-     
 
         public IDbTransaction Transaction { get; private set; }
 
@@ -66,7 +63,7 @@ namespace Serilog.Sinks.DbSql.SqlClient
             var sqlCommand = _sqlConnection.CreateCommand();
             sqlCommand.CommandText = cmdText;
             sqlCommand.Connection = _sqlConnection;
-            if(trans != null)
+            if (trans != null)
             {
                 sqlCommand.Transaction = trans;
             }

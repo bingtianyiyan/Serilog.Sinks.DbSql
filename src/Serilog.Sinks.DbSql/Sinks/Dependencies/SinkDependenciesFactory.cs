@@ -1,6 +1,6 @@
 ﻿using Serilog.Formatting;
-using Serilog.Sinks.DbSql.SqlSink;
 using Serilog.Sinks.DbSql.Output;
+using Serilog.Sinks.DbSql.SqlSink;
 using System;
 
 namespace Serilog.Sinks.DbSql.Dependencies
@@ -18,7 +18,7 @@ namespace Serilog.Sinks.DbSql.Dependencies
             columnOptions = columnOptions ?? new ColumnOptions();
             columnOptions.FinalizeConfigurationForSinkConstructor();
             var sqlConnectionFactory =
-                new SqlConnectionFactory(providerName,connectionString);
+                new SqlConnectionFactory(providerName, connectionString);
             var logEventDataGenerator =
                 new LogEventDataGenerator(columnOptions,
                     new StandardColumnDataGenerator(columnOptions, formatProvider,
@@ -34,7 +34,7 @@ namespace Serilog.Sinks.DbSql.Dependencies
                 DataTableCreator = new DataTableCreator(sinkOptions.TableName, columnOptions),
                 SqlBulkBatchWriter = new SqlBulkBatchWriter(
                     sinkOptions.TableName, sinkOptions.SchemaName,
-                    columnOptions.DisableTriggers, sqlConnectionFactory, logEventDataGenerator),
+                     sqlConnectionFactory, logEventDataGenerator),
             };
 
             return sinkDependencies;
