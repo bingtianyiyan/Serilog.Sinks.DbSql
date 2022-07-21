@@ -1,8 +1,5 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace TestSinkDbSql
 {
@@ -18,16 +15,16 @@ namespace TestSinkDbSql
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Console.WriteLine("Excute worker");
-            _logger.LogInformation("Worker started");
+           // _logger.LogInformation("Worker started");
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Worker running at: {time}. CustomProperty1: {MachineName}",
-                    DateTimeOffset.Now, "match");
+                _logger.LogInformation("Worker running at: {time}.{test} CustomProperty1: {MachineName}",
+                    DateTimeOffset.Now,"123", "match");
                 await Task.Delay(1000, stoppingToken);
             }
 
-            _logger.LogInformation("Worker stopping ...");
+          //  _logger.LogInformation("Worker stopping ...");
         }
     }
 }

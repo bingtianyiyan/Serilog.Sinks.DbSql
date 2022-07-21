@@ -7,14 +7,14 @@
     {
         SqlServer,
         MySql,
-        //SQLite,
-        //Oracle,
-        //ODBC,
-        //OleDb,
-        //Firebird,
-        //PostgreSql,
-        //DB2,
-        //Informix,
-        //SqlServerCe
+        SQLite,
+        Oracle,
+        ODBC,
+        OleDb,
+        Firebird,
+        PostgreSql,
+        DB2,
+        Informix,
+        SqlServerCe
     }
 }

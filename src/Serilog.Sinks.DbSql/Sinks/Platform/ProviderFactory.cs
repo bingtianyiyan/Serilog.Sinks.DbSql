@@ -13,15 +13,15 @@ namespace Serilog.Sinks.DbSql.Platform
         {
             providerInvariantNames.Add(SqlProviderType.SqlServer, "System.Data.SqlClient");
             providerInvariantNames.Add(SqlProviderType.MySql, "MySql.Data.MySqlClient");
-            //providerInvariantNames.Add(SqlProviderType.SQLite, "System.Data.SQLite");
-            //providerInvariantNames.Add(SqlProviderType.Oracle, "Oracle.DataAccess.Client");
-            //providerInvariantNames.Add(SqlProviderType.ODBC, "System.Data.ODBC");
-            //providerInvariantNames.Add(SqlProviderType.OleDb, "System.Data.OleDb");
-            //providerInvariantNames.Add(SqlProviderType.Firebird, "FirebirdSql.Data.Firebird");
-            //providerInvariantNames.Add(SqlProviderType.PostgreSql, "Npgsql");
-            //providerInvariantNames.Add(SqlProviderType.DB2, "IBM.Data.DB2.iSeries");
-            //providerInvariantNames.Add(SqlProviderType.Informix, "IBM.Data.Informix");
-            //providerInvariantNames.Add(SqlProviderType.SqlServerCe, "System.Data.SqlServerCe");
+            providerInvariantNames.Add(SqlProviderType.SQLite, "System.Data.SQLite");
+            providerInvariantNames.Add(SqlProviderType.Oracle, "Oracle.DataAccess.Client");
+            providerInvariantNames.Add(SqlProviderType.ODBC, "System.Data.ODBC");
+            providerInvariantNames.Add(SqlProviderType.OleDb, "System.Data.OleDb");
+            providerInvariantNames.Add(SqlProviderType.Firebird, "FirebirdSql.Data.Firebird");
+            providerInvariantNames.Add(SqlProviderType.PostgreSql, "Npgsql");
+            providerInvariantNames.Add(SqlProviderType.DB2, "IBM.Data.DB2.iSeries");
+            providerInvariantNames.Add(SqlProviderType.Informix, "IBM.Data.Informix");
+            providerInvariantNames.Add(SqlProviderType.SqlServerCe, "System.Data.SqlServerCe");
         }
 
         /// <summary>

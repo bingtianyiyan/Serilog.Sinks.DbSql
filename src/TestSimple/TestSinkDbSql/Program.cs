@@ -1,12 +1,20 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector;
+using Npgsql;
+using NpgsqlTypes;
 using Serilog;
-using System;
+using Serilog.Events;
 using Serilog.Sinks.DbSql;
 using Serilog.Sinks.DbSql.SqlSink;
-using Serilog.Events;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
+//using Serilog.Events;
+//using Serilog.Sinks.DbSql;
+//using Serilog.Sinks.DbSql.SqlSink;
+//using System.Collections.ObjectModel;
 using System.Data;
 
 namespace TestSinkDbSql
@@ -15,7 +23,6 @@ namespace TestSinkDbSql
     {
         public static void Main(string[] args)
         {
-
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -28,32 +35,52 @@ namespace TestSinkDbSql
                 .ConfigureAppConfiguration(x =>
                 {
                     x.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
                 })
                 .UseSerilog((hostingContext, loggerConfiguration) =>
                 {
                     //loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
                     //.Enrich.FromLogContext()
                     // New SinkOptions based interface
+                    #region Mysql
+                    //loggerConfiguration
+                    //              .WriteTo.DbSql(
+                    //                         MySqlConnector.MySqlConnectorFactory.Instance,
+                    //                          "Server=localhost; Port=3306; Database=CoreShop; Uid=root; Pwd=root;",
+                    //                         new DbSqlSinkOptions
+                    //                         {
+                    //                             SchemaName = "coreshop",
+                    //                             TableName = "logs7",
+                    //                             AutoCreateSqlTable = true,
+                    //                             SqlDatabaseType = SqlProviderType.MySql
+                    //                         },
+                    //                           restrictedToMinimumLevel: LevelAlias.Minimum,
+                    //                           formatProvider: null,
+                    //                           columnOptions: BuildColumnOptions(),
+                    //                           logEventFormatter: null
+                    //                );
+                    #endregion
+
+                    #region Postgres problem
                     loggerConfiguration
-                        .WriteTo.DbSql(
-                                   MySqlConnector.MySqlConnectorFactory.Instance,
-                                    "Server=localhost; Port=3306; Database=CoreShop; Uid=root; Pwd=root;",
-                                   new DbSqlSinkOptions
-                                   {
-                                       SchemaName = "coreshop",
-                                       TableName = "logs5",
-                                       AutoCreateSqlTable = false,
-                                       SqlDatabaseType = SqlProviderType.MySql
-                                   },
-                                     restrictedToMinimumLevel: LevelAlias.Minimum,
-                                     formatProvider: null,
-                                     columnOptions: BuildColumnOptions(),
-                                     logEventFormatter: null
-                          );
+                      .WriteTo.DbSql(
+                                 NpgsqlFactory.Instance,
+                                  "Server=127.0.0.1; Port=5432; Database=coreshop; Uid=postgres; Pwd=postgres;",
+                                 new DbSqlSinkOptions
+                                 {
+                                     SchemaName = "public",
+                                     TableName = "logs5",
+                                     AutoCreateSqlTable = false,
+                                     SqlDatabaseType = SqlProviderType.PostgreSql
+                                 },
+                                   restrictedToMinimumLevel: LevelAlias.Minimum,
+                                   formatProvider: null,
+                                   columnOptions: BuildColumnOptions(),
+                                   logEventFormatter: null
+                        );
+                    #endregion
+
 
                 });
-
 
         private static ColumnOptions BuildColumnOptions()
         {
@@ -67,15 +94,14 @@ namespace TestSinkDbSql
 
                 AdditionalColumns = new Collection<SqlColumn>
                 {
-                    new SqlColumn { DataType = SqlDbType.NVarChar, ColumnName = "MachineName" }
+                    new SqlColumn { DataType =SqlDbType.VarChar, ColumnName = "MachineName" },
+                   // new SqlColumn {DataType = SqlDbType.Int,ColumnName ="MM"}
                 }
             };
 
-            //columnOptions.Store.Remove(StandardColumn.Properties);
+            columnOptions.Store.Remove(StandardColumn.Properties);
 
             return columnOptions;
         }
-
-
     }
 }

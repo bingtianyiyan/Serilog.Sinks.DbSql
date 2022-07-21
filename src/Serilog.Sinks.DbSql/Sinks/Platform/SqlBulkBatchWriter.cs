@@ -32,7 +32,8 @@ namespace Serilog.Sinks.DbSql
         {
             try
             {
-                // FillDataTable(events, dataTable);
+                //filter data column
+               //  FillDataTable(events, dataTable);
 
                 using (var connection = _sqlConnectionFactory.Create())
                 {
@@ -43,23 +44,14 @@ namespace Serilog.Sinks.DbSql
                     {
                         using (var insertCommand = connection.CreateCommand(connection.BeginTran()))
                         {
-                            insertCommand.CommandText = $"insert into {_schemaName.ToLowerInvariant()}{_tableName.ToLowerInvariant()}({string.Join(",", columns)}) values(?{string.Join(",?", columns)})";
-                            for (int i = 0; i < dataTable.Columns.Count; i++)
-                            {
-                                if (dataTable.Columns[i].ColumnName != nameof(StandardColumn.Id))
-                                {
-                                    insertCommand.AddParameterName("?" + dataTable.Columns[i].ColumnName.ToLowerInvariant());
-                                }
-                            }
-                            var commandP = insertCommand.GetParameters();
+                            insertCommand.CommandText = $"insert into {_schemaName.ToLowerInvariant()}{_tableName.ToLowerInvariant()}({string.Join(",", columns)}) values(@{string.Join(",@", columns)})";
 
                             foreach (var logEvent in events)
                             {
-                                var index = 0;
+                                insertCommand.GetParameters()?.Clear();
                                 foreach (var field in _logEventDataGenerator.GetColumnsAndValues(logEvent))
                                 {
-                                    commandP[index].Value = field.Value ?? DBNull.Value;
-                                    index++;
+                                    insertCommand.AddParameter(field.Key.ToLowerInvariant(), field.Value ?? DBNull.Value);
                                 }
                                 insertCommand.ExecuteNonQuery();
                             }
