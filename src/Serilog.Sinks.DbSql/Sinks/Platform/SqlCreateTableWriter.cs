@@ -87,28 +87,26 @@ namespace Serilog.Sinks.DbSql
                 // end of batch
                 sql.AppendLine("END");
             }
-            //else if(sqlDatabaseType == SqlProviderType.PostgreSql)
-            //{
-            //    sql.AppendLine($"CREATE TABLE IF NOT EXISTS {tableName} ( ");
+            else if (sqlDatabaseType == SqlProviderType.PostgreSql)
+            {
+                sql.AppendLine($"CREATE TABLE IF NOT EXISTS {tableName} ( ");
 
-            //    // build column list
-            //    var i = 1;
-            //    foreach (DataColumn column in dataTable.Columns)
-            //    {
-            //        var common = (SqlColumn)column.ExtendedProperties["SqlColumn"];
+                // build column list
+                var i = 1;
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    var common = (SqlColumn)column.ExtendedProperties["SqlColumn"];
 
-            //        sql.Append(GetColumnDDL(common, sqlDatabaseType));
-            //        if (dataTable.Columns.Count > i++) sql.Append(",");
-            //        sql.AppendLine();
-            //    }
-            //    // end of CREATE TABLE
-            //    sql.AppendLine(");");
+                    sql.Append(GetColumnDDL(common, sqlDatabaseType));
+                    if (dataTable.Columns.Count > i++) sql.Append(",");
+                    sql.AppendLine();
+                }
+                // end of CREATE TABLE
+                sql.AppendLine(");");
 
-            //    // output any extra non-clustered indexes
-            //    sql.Append(ix);
-            //}
-
-
+                // output any extra non-clustered indexes
+                sql.Append(ix);
+            }
 
             return sql.ToString();
         }
@@ -126,26 +124,26 @@ namespace Serilog.Sinks.DbSql
             sb.Append($"{column.ColumnName} ");
 
             var datType = column.DataType.ToString().ToLowerInvariant();
-            ////时间类型postgres特殊处理timestamp
-            //if (sqlDatabaseType == SqlProviderType.PostgreSql)
-            //{
-            //    if (datType == "datetime")
-            //    {
-            //        sb.Append("timestamp");
-            //    }
-            //    if(datType == "nvarchar"){
-            //        sb.Append("varchar");
-            //    }
-            //    if(column.StandardColumnIdentifier != StandardColumn.Id && datType != "datetime" && datType != "nvarchar")
-            //    {
-            //        sb.Append(datType);
-            //    }
-            //}
-            //else
-            //{
-            //    sb.Append(datType);
-            //}
-            sb.Append(datType);
+            //时间类型postgres特殊处理timestamp
+            if (sqlDatabaseType == SqlProviderType.PostgreSql)
+            {
+                if (datType == "datetime")
+                {
+                    sb.Append("timestamp");
+                }
+                if (datType == "nvarchar")
+                {
+                    sb.Append("varchar");
+                }
+                if (column.StandardColumnIdentifier != StandardColumn.Id && datType != "datetime" && datType != "nvarchar")
+                {
+                    sb.Append(datType);
+                }
+            }
+            else
+            {
+                sb.Append(datType);
+            }
 
             if (SqlDataTypes.DataLengthRequired.Contains(column.DataType))
                 sb.Append("(").Append(column.DataLength == -1 ? "1024" : column.DataLength.ToString(CultureInfo.InvariantCulture)).Append(")");
@@ -162,10 +160,11 @@ namespace Serilog.Sinks.DbSql
                 //else if(sqlDatabaseType == SqlProviderType.Oracle)
                 //{
 
-                //}else if(sqlDatabaseType == SqlProviderType.PostgreSql)
-                //{
-                //    sb.Append(" serial primary key");
                 //}
+                else if (sqlDatabaseType == SqlProviderType.PostgreSql)
+                {
+                    sb.Append(" serial primary key");
+                }
 
             sb.Append(column.AllowNull ? " NULL" : " NOT NULL");
 

@@ -69,5 +69,10 @@ namespace Serilog.Sinks.DbSql.SqlSink
         /// Db Type
         /// </summary>
         public SqlProviderType SqlDatabaseType { get; set; }
+
+        /// <summary>
+        /// Sql to create Table
+        /// </summary>
+        public string CretateTableSql { get; set; }
     }
 }

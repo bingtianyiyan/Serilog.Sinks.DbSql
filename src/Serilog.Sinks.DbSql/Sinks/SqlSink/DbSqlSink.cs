@@ -143,10 +143,19 @@ namespace Serilog.Sinks.DbSql.SqlSink
             {
                 //now only can use database 
                 if (sinkOptions.SqlDatabaseType == SqlProviderType.MySql
-                    || sinkOptions.SqlDatabaseType == SqlProviderType.SqlServer)
+                    || sinkOptions.SqlDatabaseType == SqlProviderType.SqlServer
+                    || sinkOptions.SqlDatabaseType == SqlProviderType.PostgreSql)
                 {
                     sinkDependencies.SqlTableCreator.CreateTable(_eventTable);
                     return;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(sinkOptions.CretateTableSql))
+                    {
+                        sinkDependencies.SqlTableCreator.CreateTable(sinkOptions.CretateTableSql);
+                        return;
+                    }
                 }
 
                 throw new InvalidOperationException($"{sinkOptions.SqlDatabaseType.ToString()} is not have create table function,please set AutoCreateSqlTable false and please self to create table!");

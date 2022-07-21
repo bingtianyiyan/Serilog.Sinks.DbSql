@@ -68,8 +68,8 @@ namespace TestSinkDbSql
                                  new DbSqlSinkOptions
                                  {
                                      SchemaName = "public",
-                                     TableName = "logs5",
-                                     AutoCreateSqlTable = false,
+                                     TableName = "logs6",
+                                     AutoCreateSqlTable = true,
                                      SqlDatabaseType = SqlProviderType.PostgreSql
                                  },
                                    restrictedToMinimumLevel: LevelAlias.Minimum,

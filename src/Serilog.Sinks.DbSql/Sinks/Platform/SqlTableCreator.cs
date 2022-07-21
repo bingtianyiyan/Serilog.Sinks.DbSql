@@ -48,5 +48,24 @@ namespace Serilog.Sinks.DbSql
                 SelfLog.WriteLine("Exception creating table {0}:\n{1}", _tableName, ex.ToString());
             }
         }
+
+        public void CreateTable(string sql)
+        {
+            try
+            {
+                using (var conn = _sqlConnectionFactory.Create())
+                {            
+                    using (var cmd = conn.CreateCommand(sql, null))
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                SelfLog.WriteLine("Exception creating table {0}:\n{1}", _tableName, ex.ToString());
+            }
+        }
     }
 }
