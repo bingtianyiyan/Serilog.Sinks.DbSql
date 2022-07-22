@@ -40,12 +40,8 @@ namespace Serilog.Sinks.DbSql
             if (loggerConfiguration == null)
                 throw new ArgumentNullException(nameof(loggerConfiguration));
 
-            IProviderFactory _providerFactory = new ProviderFactory();
-            string providerName = _providerFactory.GetProviderInvariantName(sinkOptions.SqlDatabaseType);
-            _providerFactory.RegisterFactory(providerName, factory);
-
             IDbSqlSinkFactory sinkFactory = new DbSqlSinkFactory();
-            var sink = sinkFactory.Create(providerName, connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create(connectionString,factory, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             IPeriodicBatchingSinkFactory periodicBatchingSinkFactory = new PeriodicBatchingSinkFactory();
             var periodicBatchingSink = periodicBatchingSinkFactory.Create(sink, sinkOptions);
@@ -94,11 +90,8 @@ namespace Serilog.Sinks.DbSql
 
             //ReadConfiguration(configSectionName, ref connectionString, ref sinkOptions, ref columnOptions);
 
-            IProviderFactory _providerFactory = new ProviderFactory();
-            string providerName = _providerFactory.GetProviderInvariantName(sinkOptions.SqlDatabaseType);
-            _providerFactory.RegisterFactory(providerName, factory);
 
-            var sink = sinkFactory.Create(providerName, connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create( connectionString,factory, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             var periodicBatchingSink = batchingSinkFactory.Create(sink, sinkOptions);
 

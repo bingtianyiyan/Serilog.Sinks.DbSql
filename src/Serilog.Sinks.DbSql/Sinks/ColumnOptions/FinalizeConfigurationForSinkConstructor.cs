@@ -18,22 +18,6 @@ namespace Serilog.Sinks.DbSql
             if (_configurationFinalized)
                 return;
 
-#pragma warning disable 618 // deprecated: ColumnOptions.AddtionalDataColumns
-            if (AdditionalDataColumns != null)
-            {
-                SelfLog.WriteLine("Deprecated: The \"AdditionalDataColumns\" collection will be removed in a future release. Please use the \"AdditionalColumns\" collection.");
-
-                if (AdditionalColumns == null)
-                    AdditionalColumns = new Collection<SqlColumn>();
-
-                foreach (var dataColumn in AdditionalDataColumns)
-                {
-                    AdditionalColumns.Add(new SqlColumn(dataColumn));
-                }
-                AdditionalDataColumns = null;
-            }
-#pragma warning restore 618
-
             // the constructor sets Id as the PK, remove it if the Id column was removed
             if (!Store.Contains(StandardColumn.Id) && PrimaryKey == Id)
                 PrimaryKey = null;

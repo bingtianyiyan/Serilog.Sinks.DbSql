@@ -60,19 +60,6 @@ namespace Serilog.Sinks.DbSql
                 return dataColumn;
             }
 
-            /// <summary>
-            /// Set the DataType property to BigInt.
-            /// </summary>
-            [Obsolete("Set the DataType property to BigInt. This will be removed in a future release.", error: false)]
-            public bool BigInt
-            {
-                get => (base.DataType == SqlDbType.BigInt);
-                set
-                {
-                    base.DataType = value ? SqlDbType.BigInt : SqlDbType.Int;
-                    SelfLog.WriteLine("Deprecated: The Standard Column \"Id.BigInt\" property will be removed in a future release. Please set the \"DataType\" property.");
-                }
-            }
         }
     }
 }

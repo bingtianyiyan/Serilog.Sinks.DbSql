@@ -4,7 +4,7 @@ using System.Data.Common;
 
 namespace Serilog.Sinks.DbSql.Platform
 {
-    public class ProviderFactory : IProviderFactory
+    internal class ProviderFactory : IProviderFactory
     {
         private static Dictionary<SqlProviderType, string> providerInvariantNames = new Dictionary<SqlProviderType, string>();
         private static Dictionary<SqlProviderType, DbProviderFactory> providerFactoies = new Dictionary<SqlProviderType, DbProviderFactory>(20);
@@ -23,6 +23,7 @@ namespace Serilog.Sinks.DbSql.Platform
             providerInvariantNames.Add(SqlProviderType.Informix, "IBM.Data.Informix");
             providerInvariantNames.Add(SqlProviderType.SqlServerCe, "System.Data.SqlServerCe");
         }
+
 
         /// <summary>
         /// get provider

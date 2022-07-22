@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data;
 
 namespace Serilog.Sinks.DbSql
 {
@@ -86,18 +85,10 @@ namespace Serilog.Sinks.DbSql
         /// </summary>
         public bool ClusteredColumnstoreIndex { get; set; } = false;
 
-
         /// <summary>
         /// Additional log event property columns.
         /// </summary>
         public ICollection<SqlColumn> AdditionalColumns { get; set; }
-
-        /// <summary>
-        /// Deprecated. Use the <see cref="AdditionalColumns"/> collection instead. The sink constructor
-        /// will migrate this collection to the new collection automatically until this feature is removed.
-        /// </summary>
-        [Obsolete("Use the AdditionalColumns collection instead. This will be removed in a future release.", error: false)]
-        public ICollection<DataColumn> AdditionalDataColumns { get; set; }
 
         /// <summary>
         /// Options for the Id column.
