@@ -6,7 +6,7 @@
 //namespace Serilog.Sinks.DbSql.Sinks
 //{
 //    /// <summary>
-//    /// Convert Value Data Type To Real Database Value Data Type 
+//    /// Convert Value Data Type To Real Database Value Data Type
 //    /// </summary>
 //    public class SqlDataTypeConvert
 //    {
@@ -92,7 +92,6 @@
 //            //}
 //            return null;
 //        }
-
 
 //        #region SqlServer
 //        public static string GetSqlServerSqlTypeStr(SqlDbType dbType, int? columnLength = null, string realDbType = null)

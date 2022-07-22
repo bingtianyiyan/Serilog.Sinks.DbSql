@@ -1,5 +1,4 @@
-﻿using Serilog.Debugging;
-using System;
+﻿using System;
 using System.Data;
 
 namespace Serilog.Sinks.DbSql
@@ -59,7 +58,6 @@ namespace Serilog.Sinks.DbSql
                 dataColumn.AllowDBNull = false;
                 return dataColumn;
             }
-
         }
     }
 }

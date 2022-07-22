@@ -54,7 +54,7 @@ namespace Serilog.Sinks.DbSql
             try
             {
                 using (var conn = _sqlConnectionFactory.Create())
-                {            
+                {
                     using (var cmd = conn.CreateCommand(sql, null))
                     {
                         conn.Open();

@@ -1,20 +1,11 @@
-﻿using Dapper;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MySqlConnector;
-using Npgsql;
-using NpgsqlTypes;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.DbSql;
 using Serilog.Sinks.DbSql.SqlSink;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-//using Serilog.Events;
-//using Serilog.Sinks.DbSql;
-//using Serilog.Sinks.DbSql.SqlSink;
-//using System.Collections.ObjectModel;
 using System.Data;
 
 namespace TestSinkDbSql
@@ -41,10 +32,11 @@ namespace TestSinkDbSql
                     //loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
                     //.Enrich.FromLogContext()
                     // New SinkOptions based interface
+
                     #region Mysql
+
                     //loggerConfiguration
                     //              .WriteTo.DbSql(
-                    //                         MySqlConnector.MySqlConnectorFactory.Instance,
                     //                          "Server=localhost; Port=3306; Database=CoreShop; Uid=root; Pwd=root;",
                     //                         new DbSqlSinkOptions
                     //                         {
@@ -58,12 +50,13 @@ namespace TestSinkDbSql
                     //                           columnOptions: BuildColumnOptions(),
                     //                           logEventFormatter: null
                     //                );
-                    #endregion
+
+                    #endregion Mysql
 
                     #region Postgres problem
+
                     loggerConfiguration
                       .WriteTo.DbSql(
-                                 NpgsqlFactory.Instance,
                                   "Server=127.0.0.1; Port=5432; Database=coreshop; Uid=postgres; Pwd=postgres;",
                                  new DbSqlSinkOptions
                                  {
@@ -77,9 +70,8 @@ namespace TestSinkDbSql
                                    columnOptions: BuildColumnOptions(),
                                    logEventFormatter: null
                         );
-                    #endregion
 
-
+                    #endregion Postgres problem
                 });
 
         private static ColumnOptions BuildColumnOptions()

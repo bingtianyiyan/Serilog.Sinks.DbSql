@@ -8,13 +8,15 @@
         SqlServer,
         MySql,
         SQLite,
+
         Oracle,
-        ODBC,
-        OleDb,
-        Firebird,
+        //ODBC,
+        //OleDb,
+        //Firebird,
         PostgreSql,
-        DB2,
-        Informix,
-        SqlServerCe
+
+        //DB2,
+        //Informix,
+        //SqlServerCe
     }
 }

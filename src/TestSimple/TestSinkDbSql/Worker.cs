@@ -15,16 +15,16 @@ namespace TestSinkDbSql
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Console.WriteLine("Excute worker");
-           // _logger.LogInformation("Worker started");
+            // _logger.LogInformation("Worker started");
 
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}.{test} CustomProperty1: {MachineName}",
-                    DateTimeOffset.Now,"123", "match");
+                    DateTimeOffset.Now, "123", "match");
                 await Task.Delay(1000, stoppingToken);
             }
 
-          //  _logger.LogInformation("Worker stopping ...");
+            //  _logger.LogInformation("Worker stopping ...");
         }
     }
 }

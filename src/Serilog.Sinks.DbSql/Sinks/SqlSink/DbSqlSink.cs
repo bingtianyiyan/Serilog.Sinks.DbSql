@@ -5,7 +5,6 @@ using Serilog.Sinks.PeriodicBatching;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Serilog.Sinks.DbSql.SqlSink
@@ -33,13 +32,12 @@ namespace Serilog.Sinks.DbSql.SqlSink
         private bool _disposedValue;
 
         public DbSqlSink(
-            DbProviderFactory factory,
             string connectionString,
             DbSqlSinkOptions sinkOptions,
             IFormatProvider formatProvider = null,
             ColumnOptions columnOptions = null,
             ITextFormatter logEventFormatter = null)
-            : this(sinkOptions, SinkDependenciesFactory.Create(factory, connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter))
+            : this(sinkOptions, SinkDependenciesFactory.Create(connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter))
         {
         }
 
@@ -142,7 +140,7 @@ namespace Serilog.Sinks.DbSql.SqlSink
         {
             if (sinkOptions.AutoCreateSqlTable)
             {
-                //now only can use database 
+                //now only can use database
                 if (sinkOptions.SqlDatabaseType == SqlProviderType.MySql
                     || sinkOptions.SqlDatabaseType == SqlProviderType.SqlServer
                     || sinkOptions.SqlDatabaseType == SqlProviderType.PostgreSql)

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Npgsql;
+using Oracle.ManagedDataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace Serilog.Sinks.DbSql.Platform
 {
@@ -14,16 +18,16 @@ namespace Serilog.Sinks.DbSql.Platform
             providerInvariantNames.Add(SqlProviderType.SqlServer, "System.Data.SqlClient");
             providerInvariantNames.Add(SqlProviderType.MySql, "MySql.Data.MySqlClient");
             providerInvariantNames.Add(SqlProviderType.SQLite, "System.Data.SQLite");
-            providerInvariantNames.Add(SqlProviderType.Oracle, "Oracle.DataAccess.Client");
-            providerInvariantNames.Add(SqlProviderType.ODBC, "System.Data.ODBC");
-            providerInvariantNames.Add(SqlProviderType.OleDb, "System.Data.OleDb");
-            providerInvariantNames.Add(SqlProviderType.Firebird, "FirebirdSql.Data.Firebird");
+            // providerInvariantNames.Add(SqlProviderType.Oracle, "Oracle.DataAccess.Client");
+            // do not test
+            //providerInvariantNames.Add(SqlProviderType.ODBC, "System.Data.ODBC");
+            //providerInvariantNames.Add(SqlProviderType.OleDb, "System.Data.OleDb");
+            //providerInvariantNames.Add(SqlProviderType.Firebird, "FirebirdSql.Data.Firebird");
             providerInvariantNames.Add(SqlProviderType.PostgreSql, "Npgsql");
-            providerInvariantNames.Add(SqlProviderType.DB2, "IBM.Data.DB2.iSeries");
-            providerInvariantNames.Add(SqlProviderType.Informix, "IBM.Data.Informix");
-            providerInvariantNames.Add(SqlProviderType.SqlServerCe, "System.Data.SqlServerCe");
+            //providerInvariantNames.Add(SqlProviderType.DB2, "IBM.Data.DB2.iSeries");
+            //providerInvariantNames.Add(SqlProviderType.Informix, "IBM.Data.Informix");
+            //providerInvariantNames.Add(SqlProviderType.SqlServerCe, "System.Data.SqlServerCe");
         }
-
 
         /// <summary>
         /// get provider
@@ -74,9 +78,34 @@ namespace Serilog.Sinks.DbSql.Platform
         /// </summary>
         /// <param name="providerInvariantName"></param>
         /// <param name="factory"></param>
-        public void RegisterFactory(string providerInvariantName, DbProviderFactory factory)
+        public void RegisterFactory(string providerInvariantName, SqlProviderType providerType)
         {
+            var factory = GetDbProviderFactoryWithName(providerType);
             DbProviderFactories.RegisterFactory(providerInvariantName, factory);
+        }
+
+        private DbProviderFactory GetDbProviderFactoryWithName(SqlProviderType providerType)
+        {
+            if (providerType == SqlProviderType.MySql)
+            {
+                return MySqlConnector.MySqlConnectorFactory.Instance;
+            }
+            else if (providerType == SqlProviderType.PostgreSql)
+            {
+                return NpgsqlFactory.Instance;
+            }
+            else if (providerType == SqlProviderType.SqlServer)
+            {
+                return SqlClientFactory.Instance;
+            }
+            else if (providerType == SqlProviderType.SQLite)
+            {
+                return SQLiteFactory.Instance;
+            }else if(providerType == SqlProviderType.Oracle)
+            {
+                return OracleClientFactory.Instance;
+            }
+            throw new Exception("Factoryies is not defined in project");
         }
     }
 }

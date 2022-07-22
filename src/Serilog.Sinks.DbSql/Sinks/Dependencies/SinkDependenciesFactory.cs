@@ -3,14 +3,12 @@ using Serilog.Sinks.DbSql.Output;
 using Serilog.Sinks.DbSql.Platform;
 using Serilog.Sinks.DbSql.SqlSink;
 using System;
-using System.Data.Common;
 
 namespace Serilog.Sinks.DbSql.Dependencies
 {
     internal static class SinkDependenciesFactory
     {
         internal static SinkDependencies Create(
-            DbProviderFactory factory,
             string connectionString,
             DbSqlSinkOptions sinkOptions,
             IFormatProvider formatProvider,
@@ -22,7 +20,7 @@ namespace Serilog.Sinks.DbSql.Dependencies
             //register
             IProviderFactory _providerFactory = new ProviderFactory();
             string providerName = _providerFactory.GetProviderInvariantName(sinkOptions.SqlDatabaseType);
-            _providerFactory.RegisterFactory(providerName, factory);
+            _providerFactory.RegisterFactory(providerName, sinkOptions.SqlDatabaseType);
 
             var sqlConnectionFactory =
                 new SqlConnectionFactory(providerName, connectionString);

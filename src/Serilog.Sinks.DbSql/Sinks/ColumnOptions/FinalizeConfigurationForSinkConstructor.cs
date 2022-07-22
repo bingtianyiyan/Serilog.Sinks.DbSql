@@ -1,6 +1,5 @@
 ﻿using Serilog.Debugging;
 using System;
-using System.Collections.ObjectModel;
 
 namespace Serilog.Sinks.DbSql
 {

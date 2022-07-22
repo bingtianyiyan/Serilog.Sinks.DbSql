@@ -2,7 +2,6 @@
 using Serilog.Sinks.DbSql.SqlSink;
 using Serilog.Sinks.PeriodicBatching;
 using System;
-using System.Data.Common;
 
 namespace Serilog.Sinks.DbSql.Configuration.Factories
 {
@@ -10,7 +9,6 @@ namespace Serilog.Sinks.DbSql.Configuration.Factories
     {
         IBatchedLogEventSink Create(
             string connectionString,
-            DbProviderFactory factory,
             DbSqlSinkOptions sinkOptions,
             IFormatProvider formatProvider,
             ColumnOptions columnOptions,

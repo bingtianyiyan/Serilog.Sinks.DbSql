@@ -2,10 +2,8 @@
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Sinks.DbSql.Configuration.Factories;
-using Serilog.Sinks.DbSql.Platform;
 using Serilog.Sinks.DbSql.SqlSink;
 using System;
-using System.Data.Common;
 
 namespace Serilog.Sinks.DbSql
 {
@@ -29,7 +27,6 @@ namespace Serilog.Sinks.DbSql
         /// <exception cref="ArgumentNullException"></exception>
         public static LoggerConfiguration DbSql(
         this LoggerSinkConfiguration loggerConfiguration,
-        DbProviderFactory factory,
         string connectionString,
         DbSqlSinkOptions sinkOptions,
         LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
@@ -41,7 +38,7 @@ namespace Serilog.Sinks.DbSql
                 throw new ArgumentNullException(nameof(loggerConfiguration));
 
             IDbSqlSinkFactory sinkFactory = new DbSqlSinkFactory();
-            var sink = sinkFactory.Create(connectionString,factory, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create(connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             IPeriodicBatchingSinkFactory periodicBatchingSinkFactory = new PeriodicBatchingSinkFactory();
             var periodicBatchingSink = periodicBatchingSinkFactory.Create(sink, sinkOptions);
@@ -52,7 +49,6 @@ namespace Serilog.Sinks.DbSql
         public static LoggerConfiguration DbSql(
             this LoggerSinkConfiguration loggerConfiguration,
             string connectionString,
-             DbProviderFactory factory,
             string configSectionName,
             DbSqlSinkOptions sinkOptions,
             LogEventLevel restrictedToMinimumLevel = LevelAlias.Minimum,
@@ -61,7 +57,6 @@ namespace Serilog.Sinks.DbSql
             ITextFormatter logEventFormatter = null) =>
             loggerConfiguration.DbSqlInternal(
                 configSectionName: configSectionName,
-                factory: factory,
                 connectionString: connectionString,
                 sinkOptions: sinkOptions,
                 restrictedToMinimumLevel: restrictedToMinimumLevel,
@@ -75,7 +70,6 @@ namespace Serilog.Sinks.DbSql
         internal static LoggerConfiguration DbSqlInternal(
             this LoggerSinkConfiguration loggerConfiguration,
             string configSectionName,
-            DbProviderFactory factory,
             string connectionString,
             DbSqlSinkOptions sinkOptions,
             LogEventLevel restrictedToMinimumLevel,
@@ -90,8 +84,7 @@ namespace Serilog.Sinks.DbSql
 
             //ReadConfiguration(configSectionName, ref connectionString, ref sinkOptions, ref columnOptions);
 
-
-            var sink = sinkFactory.Create( connectionString,factory, sinkOptions, formatProvider, columnOptions, logEventFormatter);
+            var sink = sinkFactory.Create(connectionString, sinkOptions, formatProvider, columnOptions, logEventFormatter);
 
             var periodicBatchingSink = batchingSinkFactory.Create(sink, sinkOptions);
 

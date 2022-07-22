@@ -33,7 +33,7 @@ namespace Serilog.Sinks.DbSql
             try
             {
                 //filter data column
-               //  FillDataTable(events, dataTable);
+                //  FillDataTable(events, dataTable);
 
                 using (var connection = _sqlConnectionFactory.Create())
                 {

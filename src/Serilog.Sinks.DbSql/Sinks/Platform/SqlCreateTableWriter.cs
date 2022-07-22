@@ -28,16 +28,14 @@ namespace Serilog.Sinks.DbSql
 
                     sql.Append(GetColumnDDL(common, sqlDatabaseType));
                     if (dataTable.Columns.Count > i++) sql.Append(",");
-                    sql.AppendLine();             
+                    sql.AppendLine();
                 }
-
 
                 // end of CREATE TABLE
                 sql.AppendLine(");");
-     
+
                 // output any extra non-clustered indexes
                 sql.Append(ix);
-
             }
             else if (sqlDatabaseType == SqlProviderType.SqlServer)
             {
@@ -58,7 +56,7 @@ namespace Serilog.Sinks.DbSql
                 {
                     var common = (SqlColumn)column.ExtendedProperties["SqlColumn"];
 
-                    sql.Append(GetColumnDDL(common,sqlDatabaseType));
+                    sql.Append(GetColumnDDL(common, sqlDatabaseType));
                     if (dataTable.Columns.Count > i++) sql.Append(",");
                     sql.AppendLine();
 
@@ -153,13 +151,12 @@ namespace Serilog.Sinks.DbSql
                 {
                     sb.Append(" IDENTITY(1,1)");
                 }
-                else if(sqlDatabaseType == SqlProviderType.MySql)
+                else if (sqlDatabaseType == SqlProviderType.MySql)
                 {
                     sb.Append(" auto_increment primary key");
                 }
                 //else if(sqlDatabaseType == SqlProviderType.Oracle)
                 //{
-
                 //}
                 else if (sqlDatabaseType == SqlProviderType.PostgreSql)
                 {

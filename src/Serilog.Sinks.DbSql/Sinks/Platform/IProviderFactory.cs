@@ -4,7 +4,7 @@ namespace Serilog.Sinks.DbSql.Platform
 {
     public interface IProviderFactory
     {
-        void RegisterFactory(string providerInvariantName, DbProviderFactory factory);
+        void RegisterFactory(string providerInvariantName, SqlProviderType providerType);
 
         string GetProviderInvariantName(SqlProviderType providerType);
 
