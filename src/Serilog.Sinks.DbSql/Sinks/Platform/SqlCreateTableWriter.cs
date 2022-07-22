@@ -105,7 +105,52 @@ namespace Serilog.Sinks.DbSql
                 // output any extra non-clustered indexes
                 sql.Append(ix);
             }
+            else if(sqlDatabaseType == SqlProviderType.Oracle)
+            {
+                sql.AppendLine($"CREATE TABLE IF NOT EXISTS {tableName} ( ");
 
+                // build column list
+                var i = 1;
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    var common = (SqlColumn)column.ExtendedProperties["SqlColumn"];
+
+                    sql.Append(GetColumnDDL(common, sqlDatabaseType));
+                    if (dataTable.Columns.Count > i++) sql.Append(",");
+                    sql.AppendLine();
+                }
+                // end of CREATE TABLE
+                sql.AppendLine(");");
+
+                //primary increase
+                ix.AppendLine($"CREATE SEQUENCE {schemaName}.{tableName}_SEQUENCE START WITH 1 INCREMENT BY 1;");
+                ix.AppendLine($"create trigger {schemaName}.{tableName}_Trigger " +
+                    $"before insert on {schemaName}.{tableName} for each row " +
+                    $"begin select {schemaName}.{tableName}_SEQUENCE.nextval into :new.id from dual; end; ");
+                // output any extra non-clustered indexes
+                sql.Append(ix);
+            }
+            else if(sqlDatabaseType == SqlProviderType.SQLite)
+            {
+                sql.AppendLine($"CREATE TABLE IF NOT EXISTS {schemaName}.{tableName} ( ");
+
+                // build column list
+                var i = 1;
+                foreach (DataColumn column in dataTable.Columns)
+                {
+                    var common = (SqlColumn)column.ExtendedProperties["SqlColumn"];
+
+                    sql.Append(GetColumnDDL(common, sqlDatabaseType));
+                    if (dataTable.Columns.Count > i++) sql.Append(",");
+                    sql.AppendLine();
+                }
+
+                // end of CREATE TABLE
+                sql.AppendLine(");");
+
+                // output any extra non-clustered indexes
+                sql.Append(ix);
+            }
             return sql.ToString();
         }
 
@@ -137,6 +182,31 @@ namespace Serilog.Sinks.DbSql
                 {
                     sb.Append(datType);
                 }
+            }else if(sqlDatabaseType == SqlProviderType.Oracle)
+            {
+                if (datType == "datetime")
+                {
+                    sb.Append("timestamp");
+                }
+                if (datType == "nvarchar")
+                {
+                    sb.Append("nvarchar2");
+                }
+                if (column.StandardColumnIdentifier != StandardColumn.Id && datType != "datetime" && datType != "nvarchar")
+                {
+                    sb.Append(datType);
+                }
+            }
+            else if(sqlDatabaseType == SqlProviderType.SQLite)
+            {
+                if(datType == "int" && column.StandardColumnIdentifier == StandardColumn.Id)
+                {
+                    sb.Append("integer");
+                }
+                else
+                {
+                    sb.Append(datType);
+                }
             }
             else
             {
@@ -155,12 +225,16 @@ namespace Serilog.Sinks.DbSql
                 {
                     sb.Append(" auto_increment primary key");
                 }
-                //else if(sqlDatabaseType == SqlProviderType.Oracle)
-                //{
-                //}
+                else if (sqlDatabaseType == SqlProviderType.Oracle)
+                {
+                    sb.Append(" primary key");
+                }
                 else if (sqlDatabaseType == SqlProviderType.PostgreSql)
                 {
                     sb.Append(" serial primary key");
+                }else if(sqlDatabaseType == SqlProviderType.SQLite)
+                {
+                    sb.Append(" PRIMARY KEY AUTOINCREMENT");
                 }
 
             sb.Append(column.AllowNull ? " NULL" : " NOT NULL");

@@ -143,7 +143,9 @@ namespace Serilog.Sinks.DbSql.SqlSink
                 //now only can use database
                 if (sinkOptions.SqlDatabaseType == SqlProviderType.MySql
                     || sinkOptions.SqlDatabaseType == SqlProviderType.SqlServer
-                    || sinkOptions.SqlDatabaseType == SqlProviderType.PostgreSql)
+                    || sinkOptions.SqlDatabaseType == SqlProviderType.PostgreSql
+                    || sinkOptions.SqlDatabaseType == SqlProviderType.Oracle
+                    || sinkOptions.SqlDatabaseType == SqlProviderType.SQLite)
                 {
                     sinkDependencies.SqlTableCreator.CreateTable(_eventTable);
                     return;

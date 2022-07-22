@@ -55,23 +55,41 @@ namespace TestSinkDbSql
 
                     #region Postgres problem
 
-                    loggerConfiguration
-                      .WriteTo.DbSql(
-                                  "Server=127.0.0.1; Port=5432; Database=coreshop; Uid=postgres; Pwd=postgres;",
-                                 new DbSqlSinkOptions
-                                 {
-                                     SchemaName = "public",
-                                     TableName = "logs6",
-                                     AutoCreateSqlTable = true,
-                                     SqlDatabaseType = SqlProviderType.PostgreSql
-                                 },
-                                   restrictedToMinimumLevel: LevelAlias.Minimum,
-                                   formatProvider: null,
-                                   columnOptions: BuildColumnOptions(),
-                                   logEventFormatter: null
-                        );
+                    //loggerConfiguration
+                    //  .WriteTo.DbSql(
+                    //              "Server=127.0.0.1; Port=5432; Database=coreshop; Uid=postgres; Pwd=postgres;",
+                    //             new DbSqlSinkOptions
+                    //             {
+                    //                 SchemaName = "public",
+                    //                 TableName = "logs6",
+                    //                 AutoCreateSqlTable = true,
+                    //                 SqlDatabaseType = SqlProviderType.PostgreSql
+                    //             },
+                    //               restrictedToMinimumLevel: LevelAlias.Minimum,
+                    //               formatProvider: null,
+                    //               columnOptions: BuildColumnOptions(),
+                    //               logEventFormatter: null
+                    //    );
 
                     #endregion Postgres problem
+
+                    #region Sqlite
+                    loggerConfiguration
+                     .WriteTo.DbSql(
+                                 $@"DataSource = E:\工具包\sqlite-tools-win32-x86-3390200\sqlite-tools-win32-x86-3390200\mysqdb.db;",
+                                new DbSqlSinkOptions
+                                {
+                                    SchemaName = "main",
+                                    TableName = "logs6",
+                                    AutoCreateSqlTable = true,
+                                    SqlDatabaseType = SqlProviderType.SQLite
+                                },
+                                  restrictedToMinimumLevel: LevelAlias.Minimum,
+                                  formatProvider: null,
+                                  columnOptions: BuildColumnOptions(),
+                                  logEventFormatter: null
+                       );
+                    #endregion
                 });
 
         private static ColumnOptions BuildColumnOptions()
