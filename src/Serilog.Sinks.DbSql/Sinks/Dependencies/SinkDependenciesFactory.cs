@@ -34,8 +34,8 @@ namespace Serilog.Sinks.DbSql.Dependencies
             var sinkDependencies = new SinkDependencies
             {
                 SqlTableCreator = new SqlTableCreator(
-                    sinkOptions.TableName, sinkOptions.SchemaName, sinkOptions.SqlDatabaseType, columnOptions,
-                    new SqlCreateTableWriter(), sqlConnectionFactory),
+                    sinkOptions.TableName, sinkOptions.SchemaName, columnOptions,
+                    SqlCreateTableWriter.GetRealDbTableWriter(sinkOptions.SqlDatabaseType), sqlConnectionFactory),
                 DataTableCreator = new DataTableCreator(sinkOptions.TableName, columnOptions),
                 SqlBulkBatchWriter = new SqlBulkBatchWriter(
                     sinkOptions.TableName, sinkOptions.SchemaName,
