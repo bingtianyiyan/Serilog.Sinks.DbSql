@@ -74,7 +74,7 @@ namespace Serilog.Sinks.DbSql
 
             sb.Append($"{column.ColumnName} ");
 
-            var datType = column.DataType.ToString().ToLowerInvariant();
+            var datType = column.DataType.ToString() == column.RealDataType ? column.DataType.ToString().ToLowerInvariant() : column.RealDataType;
             sb.Append(datType);
 
             if (SqlDataTypes.DataLengthRequired.Contains(column.DataType))

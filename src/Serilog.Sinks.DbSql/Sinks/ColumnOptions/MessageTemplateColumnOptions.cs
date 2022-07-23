@@ -17,6 +17,7 @@ namespace Serilog.Sinks.DbSql
             {
                 StandardColumnIdentifier = StandardColumn.MessageTemplate;
                 DataType = SqlDbType.NVarChar;
+                RealDataType = nameof(SqlDbType.NVarChar);
             }
 
             /// <summary>

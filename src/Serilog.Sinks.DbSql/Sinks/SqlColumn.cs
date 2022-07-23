@@ -80,6 +80,11 @@ namespace Serilog.Sinks.DbSql
         }
 
         /// <summary>
+        /// real database dataColumn type
+        /// </summary>
+        public string RealDataType { get; set; }
+
+        /// <summary>
         /// Indicates whether NULLs can be stored in this column. Default is true. Always required.
         /// </summary>
         // The Id Standard Column hides this (via "new") to force this to false.

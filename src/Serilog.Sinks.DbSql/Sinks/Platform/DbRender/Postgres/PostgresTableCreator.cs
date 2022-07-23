@@ -45,17 +45,25 @@ namespace Serilog.Sinks.DbSql
 
             sb.Append($"{column.ColumnName} ");
 
-            var datType = column.DataType.ToString().ToLowerInvariant();
-            //时间类型postgres特殊处理timestamp
-            if (datType == "datetime")
+            var datType = column.DataType.ToString() == column.RealDataType ? column.DataType.ToString().ToLowerInvariant() : column.RealDataType;
+            //if not set,get the specail hander
+            if (column.DataType.ToString() == column.RealDataType)
             {
-                sb.Append("timestamp");
+                //时间类型postgres特殊处理timestamp
+                if (datType == "datetime")
+                {
+                    sb.Append("timestamp");
+                }
+                if (datType == "nvarchar")
+                {
+                    sb.Append("varchar");
+                }
+                if (column.StandardColumnIdentifier != StandardColumn.Id && datType != "datetime" && datType != "nvarchar")
+                {
+                    sb.Append(datType);
+                }
             }
-            if (datType == "nvarchar")
-            {
-                sb.Append("varchar");
-            }
-            if (column.StandardColumnIdentifier != StandardColumn.Id && datType != "datetime" && datType != "nvarchar")
+            else
             {
                 sb.Append(datType);
             }

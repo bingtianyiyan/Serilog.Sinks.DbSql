@@ -17,6 +17,7 @@ namespace Serilog.Sinks.DbSql
             {
                 StandardColumnIdentifier = StandardColumn.Properties;
                 DataType = SqlDbType.NVarChar;
+                RealDataType = nameof(SqlDbType.NVarChar);
                 DictionaryElementName = "dictionary";
                 ItemElementName = "item";
                 PropertyElementName = "property";

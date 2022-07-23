@@ -17,6 +17,7 @@ namespace Serilog.Sinks.DbSql
             {
                 StandardColumnIdentifier = StandardColumn.Id;
                 DataType = SqlDbType.Int;
+                RealDataType = nameof(SqlDbType.Int);
                 base.AllowNull = false;
             }
 

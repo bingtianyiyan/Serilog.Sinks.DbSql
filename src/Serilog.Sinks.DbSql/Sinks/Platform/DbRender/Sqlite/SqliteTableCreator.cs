@@ -46,11 +46,18 @@ namespace Serilog.Sinks.DbSql
 
             sb.Append($"{column.ColumnName} ");
 
-            var datType = column.DataType.ToString().ToLowerInvariant();
-            //时间类型postgres特殊处理timestamp
-            if (datType == "int" && column.StandardColumnIdentifier == StandardColumn.Id)
+            var datType = column.DataType.ToString() == column.RealDataType ? column.DataType.ToString().ToLowerInvariant() : column.RealDataType;
+            //if not set,get the specail hander
+            if (column.DataType.ToString() == column.RealDataType)
             {
-                sb.Append("integer");
+                if (datType == "int")
+                {
+                    sb.Append("integer");
+                }
+                else
+                {
+                    sb.Append(datType);
+                }
             }
             else
             {

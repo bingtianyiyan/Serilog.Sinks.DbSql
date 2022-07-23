@@ -17,6 +17,7 @@ namespace Serilog.Sinks.DbSql
             {
                 StandardColumnIdentifier = StandardColumn.TimeStamp;
                 DataType = SqlDbType.DateTime;
+                RealDataType = nameof(SqlDbType.DateTime);
             }
 
             /// <summary>

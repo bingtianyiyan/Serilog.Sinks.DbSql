@@ -96,6 +96,10 @@ namespace TestSinkDbSql
         {
             var columnOptions = new ColumnOptions
             {
+                //Id =
+                //{
+                //  RealDataType = "integer"
+                //},
                 //TimeStamp =
                 //{
                 //    ColumnName = "TimeStampUTC",
@@ -104,7 +108,8 @@ namespace TestSinkDbSql
 
                 AdditionalColumns = new Collection<SqlColumn>
                 {
-                    new SqlColumn { DataType =SqlDbType.VarChar, ColumnName = "MachineName" },
+                    new SqlColumn { DataType =SqlDbType.VarChar, ColumnName = "MachineName"//,RealDataType=nameof(NpgsqlTypes.NpgsqlDbType.Varchar) 
+                    },
                    // new SqlColumn {DataType = SqlDbType.Int,ColumnName ="MM"}
                 }
             };
